@@ -307,7 +307,7 @@ strong { font-weight: 650; }
 }
 
 /* ---------- Hero (start) ---------- */
-/* Helbild med rubrik nere till vänster och genvägsrad i nederkant (som Zengun, Assemblin, Sweco) */
+/* Helbild med rubrik nere till vänster (som Zengun och Assemblin) */
 .hero { position: relative; min-height: min(calc(100svh - var(--header-h)), 860px); color: var(--white); background: var(--navy-900); overflow: hidden; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; }
 .hero__media { position: absolute; inset: 0 0 0 22%; z-index: -2; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 28%); mask-image: linear-gradient(90deg, transparent 0%, #000 28%); }
 .hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 30%; }
@@ -315,7 +315,7 @@ strong { font-weight: 650; }
 .hero::after { content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(90deg, rgba(19, 31, 64, .55) 0%, rgba(19, 31, 64, .35) 35%, rgba(19, 31, 64, 0) 60%),
               linear-gradient(0deg, rgba(19, 31, 64, .55) 0%, rgba(19, 31, 64, 0) 35%); }
-.hero__body { padding-block: clamp(64px, 8vw, 120px) clamp(40px, 5vw, 64px); }
+.hero__body { padding-block: clamp(64px, 8vw, 120px) clamp(56px, 7vw, 104px); }
 .hero h1 { font-size: clamp(2.4rem, 1.2rem + 3.8vw, 5rem); font-weight: 700; line-height: 1.04; letter-spacing: -.028em; max-width: 13ch; }
 .hero__lead { margin-top: 24px; max-width: 40ch; font-size: clamp(1.05rem, 1rem + .35vw, 1.28rem); line-height: 1.55; color: rgba(255, 255, 255, .88); }
 .hero .btn-row { margin-top: 36px; }
@@ -327,28 +327,12 @@ strong { font-weight: 650; }
 @keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes hero-in { from { transform: scale(1.05); } to { transform: none; } }
 
-.hero__bar { background: rgba(19, 31, 64, .62); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); }
-.hero__bar .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.hero__bar a { position: relative; display: grid; grid-template-columns: 1fr auto; column-gap: 20px; align-items: center; padding: 26px 28px 28px 0; transition: background .3s var(--ease); }
-.hero__bar a + a { padding-left: 28px; }
-.hero__bar a + a::before { content: ""; position: absolute; left: 0; top: 22px; bottom: 22px; width: 1px; background: rgba(255, 255, 255, .16); }
-.hero__bar-title { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; }
-.hero__bar-text { grid-column: 1; margin-top: 6px; font-size: .9rem; line-height: 1.45; color: rgba(255, 255, 255, .7); }
-.hero__bar .arr { grid-column: 2; grid-row: 1 / span 2; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); position: relative; background: none; transition: background .3s var(--ease), border-color .3s var(--ease); }
-.hero__bar .arr::before { content: ""; position: absolute; left: 12px; right: 12px; top: 50%; height: 1.5px; background: currentColor; }
-.hero__bar .arr::after { content: ""; position: absolute; right: 12px; top: calc(50% - 4px); width: 8px; height: 8px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
-.hero__bar a:hover .arr { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-.hero__bar a:hover .hero__bar-title { color: var(--gold); }
 @media (max-width: 900px) {
   .hero { min-height: 0; }
   .hero__media { position: relative; inset: auto; height: 56svh; min-height: 320px; -webkit-mask-image: none; mask-image: none; }
   .hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--navy-900) 0%, rgba(19, 31, 64, 0) 45%); }
   .hero::after { display: none; }
   .hero__body { margin-top: -120px; position: relative; padding-top: 0; }
-  .hero__bar { background: var(--navy); }
-  .hero__bar .wrap { grid-template-columns: 1fr; }
-  .hero__bar a, .hero__bar a + a { padding: 18px 0; }
-  .hero__bar a + a::before { left: 0; right: 0; top: 0; bottom: auto; width: auto; height: 1px; }
 }
 
 /* ---------- Sidhero (undersidor) ---------- */
