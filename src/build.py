@@ -573,7 +573,7 @@ def jsonld(meta):
         'legalName': COMPANY['legal'],
         'url': SITE_URL + '/',
         'logo': SITE_URL + '/assets/brand/icon-512.png',
-        'image': SITE_URL + '/assets/img/goteborg-skymning-1920.jpg',
+        'image': SITE_URL + '/assets/img/hero-byggkranar-1920.jpg',
         'telephone': COMPANY['phone_href'],
         'email': COMPANY['email'],
         'foundingDate': '2019',
@@ -594,7 +594,7 @@ def layout(meta, body_html):
     full_title = title if meta.get('full_title') else f'{title} | AMT Bygg'
     canonical = SITE_URL + '/' + meta['path']
     body_cls = ' class="has-hero"' if meta.get('hero') else ''
-    og_img = SITE_URL + '/assets/img/' + meta.get('og', 'goteborg-skymning') + '-1280.jpg'
+    og_img = SITE_URL + '/assets/img/' + meta.get('og', 'hero-byggkranar') + '-1280.jpg'
     robots = '<meta name="robots" content="noindex">' if meta.get('noindex') else ''
     ld = f'<script type="application/ld+json">{jsonld(meta)}</script>' if meta['path'] == '' else ''
     return f'''<!doctype html>
