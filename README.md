@@ -29,3 +29,16 @@ Formulären öppnar idag ett förifyllt mejl till amtbygg@amtgroup.se. För att 
 ## Omdirigering
 
 Gamla adressen `/skadereparation` pekar vidare till `/anmal-skada/`.
+
+## Typsnitt och bilder
+
+Rubriker, meny och etiketter använder Montserrat (SIL Open Font License), som ligger närmast loggans geometriska bokstäver. Brödtext är Hanken Grotesk. Båda ligger lokalt i `assets/fonts/`.
+
+Bilderna `goteborg-*` och `bygg-arbetsplats` kommer från Unsplash (fri att använda kommersiellt, ingen attribuering krävs):
+
+| Fil | Fotograf |
+| --- | --- |
+| `goteborg-skymning` (startsidans hero) | Juho Luomala |
+| `goteborg-kranar`, `goteborg-hamn` | Dmitrii E. |
+| `goteborg-eriksberg` | Jeet Datta |
+| `bygg-arbetsplats` | Glenov Brankovic |

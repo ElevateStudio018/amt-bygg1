@@ -54,21 +54,18 @@ AREAS = [
         'short': 'Återställning efter vatten-, brand- och inbrottsskador – med ärendet hanterat i Meps.',
         'text': 'Vi har mångårig erfarenhet av försäkringsuppdrag. Oavsett om det är en vattenläcka, en brand eller ett inbrott så ger vi oss inte förrän kunden är helt nöjd. Vi hanterar våra skadeärenden i Meps så att du som skadehandläggare kan känna dig trygg i att det blir en effektiv och proffsig process från besiktning till färdigställande.',
         'img': 'forsakringsskada', 'alt': 'Ett par går igenom papper efter en skada i hemmet',
-        'pattern': 'parquet', 'material': 'Fiskbensparkett',
     },
     {
         'slug': 'affarsomraden/lokalanpassningar/', 'num': '02', 'title': 'Lokalanpassningar',
         'short': 'Attraktiva lokaler tillsammans med fastighetsägare och deras hyresgäster.',
         'text': 'AMT Bygg har lång erfarenhet av att skapa attraktiva lokaler tillsammans med fastighetsägare och dess hyresgäster. Vårt arbete genomsyras av ansvarstagande och en strävan att alltid hitta bästa möjliga lösning för varje given situation. Tillsammans bygger vi framtidens lokaler.',
         'img': 'renovering', 'alt': 'Snickare sågar en skiva med cirkelsåg',
-        'pattern': 'studs', 'material': 'Regelverk',
     },
     {
         'slug': 'affarsomraden/entreprenad/', 'num': '03', 'title': 'Entreprenad',
         'short': 'Del- och totalentreprenader som håller både budget och tidsplan.',
         'text': 'Vi kan entreprenad. Oavsett om det är en delentreprenad eller en totalentreprenad så ser vi till att hålla både budget och tidsplan. Vårt mål är att vara den självklara samarbetspartnern till större byggföretag som behöver pålitliga underentreprenörer såväl som till beställaren som kräver en stabil och professionell totalentreprenör.',
         'img': 'team-ritning', 'alt': 'Byggarbetare studerar ritningar på arbetsplatsen',
-        'pattern': 'brick', 'material': 'Löpförband',
     },
 ]
 
@@ -126,9 +123,9 @@ NAV = [
 ]
 
 COMPANY_LINKS = [
-    {'href': 'om-oss/', 'title': 'Om AMT Bygg', 'text': 'Ett modernt byggbolag med starka traditioner – grundat i Göteborg 2019.', 'pattern': 'wood'},
-    {'href': 'om-oss/ledningssystem/', 'title': 'Ledningssystem', 'text': 'Certifierade i Povel – kvalitet, miljö och arbetsmiljö i ett system.', 'pattern': 'grid'},
-    {'href': 'karriar/', 'title': 'Karriär', 'text': 'Vi söker servicesnickare. Bli en del av ett framgångsrikt team.', 'pattern': 'hatch'},
+    {'href': 'om-oss/', 'title': 'Om AMT Bygg', 'text': 'Ett modernt byggbolag med starka traditioner – grundat i Göteborg 2019.', 'img': 'hero-goteborg', 'alt': 'Hantverkare blickar ut över Göteborgs hamn'},
+    {'href': 'om-oss/ledningssystem/', 'title': 'Ledningssystem', 'text': 'Certifierade i Povel – kvalitet, miljö och arbetsmiljö i ett system.', 'img': 'bygg-arbetsplats', 'alt': 'Byggarbetare armerar på en arbetsplats'},
+    {'href': 'karriar/', 'title': 'Karriär', 'text': 'Vi söker servicesnickare. Bli en del av ett framgångsrikt team.', 'img': 'renovering', 'alt': 'Snickare sågar en skiva med cirkelsåg'},
 ]
 
 
@@ -211,7 +208,6 @@ def p_areas(ctx, arg=''):
         <div class="area__media">
           {pic(ctx, a['img'], a['alt'], '(max-width: 980px) 100vw, 33vw')}
           <span class="area__num">{a['num']} / 03</span>
-          <div class="area__strip">{swatch(a['pattern'], 'blue')}</div>
         </div>
         <div class="area__body">
           <h3>{a['title']}</h3>
@@ -233,11 +229,6 @@ def p_logowall(ctx, arg=''):
         items.append(f'<a href="{c["url"]}" target="_blank" rel="noopener" aria-label="{escape(c["name"])} (öppnas i ny flik)">'
                      f'<img src="{ctx.asset("logos/" + c["id"] + ".png")}" alt="{escape(c["name"])}" loading="lazy">'
                      f'<span class="lw-name" aria-hidden="true">{escape(c["sector"])}</span></a>')
-    # fyll ut sista raden med en mönsterruta så att rutnätet blir helt
-    rem = (-len(items)) % cols
-    for _ in range(rem):
-        items.append(f'<div aria-hidden="true" style="padding:0;position:relative;overflow:hidden">'
-                     f'<div class="pattern pat-hatch pat--navy" style="--pat-o:.12"></div></div>')
     return f'<div class="logo-wall reveal" style="--cols:{cols}">' + ''.join(items) + '</div>'
 
 
@@ -341,8 +332,8 @@ def p_areanav(ctx, arg=''):
     for a in others:
         out.append(f'''
       <a class="cell reveal" href="{ctx.url(a['slug'])}">
-        {swatch(a['pattern'], 'blue')}
-        <span class="cell__tag">Affärsområde {a['num']} · {a['material']}</span>
+        <div class="cell__img">{pic(ctx, a['img'], a['alt'], '(max-width: 620px) 100vw, 50vw')}</div>
+        <span class="cell__tag">Affärsområde {a['num']}</span>
         <h3>{a['title']}</h3>
         <p>{a['short']}</p>
         <span class="link-arrow mt-s"><span>Läs mer</span>{arrow()}</span>
@@ -440,7 +431,7 @@ def header(ctx, active):
         if n.get('mega') == 'areas':
             cards = ''.join(f'''
             <a class="mega__card" href="{ctx.url(a['slug'])}">
-              {swatch(a['pattern'], 'blue')}
+              <div class="mega__img">{pic(ctx, a['img'], '', '300px')}</div>
               <h3>{a['title']}</h3>
               <p>{a['short']}</p>
             </a>''' for a in AREAS)
@@ -460,7 +451,7 @@ def header(ctx, active):
         elif n.get('mega') == 'company':
             cards = ''.join(f'''
             <a class="mega__card" href="{ctx.url(c['href'])}">
-              {swatch(c['pattern'], 'blue')}
+              <div class="mega__img">{pic(ctx, c['img'], '', '300px')}</div>
               <h3>{c['title']}</h3>
               <p>{c['text']}</p>
             </a>''' for c in COMPANY_LINKS)
@@ -491,19 +482,6 @@ def header(ctx, active):
 
     return f'''
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
-<div class="utility">
-  <div class="wrap">
-    <ul class="utility__list">
-      <li class="utility__hide-sm">Huvudkontor {COMPANY['city']}</li>
-      <li><a href="tel:{COMPANY['phone_href']}">{COMPANY['phone']}</a></li>
-      <li class="utility__hide-sm"><a href="mailto:{COMPANY['email']}">{COMPANY['email']}</a></li>
-    </ul>
-    <ul class="utility__list utility__hide-sm">
-      <li><a href="{ctx.url('karriar/')}">Karriär</a></li>
-      <li><a class="utility__alert" href="{ctx.url('anmal-skada/')}">Anmäl skada</a></li>
-    </ul>
-  </div>
-</div>
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="{ctx.url('')}" aria-label="AMT Bygg – till startsidan">
@@ -595,7 +573,7 @@ def jsonld(meta):
         'legalName': COMPANY['legal'],
         'url': SITE_URL + '/',
         'logo': SITE_URL + '/assets/brand/icon-512.png',
-        'image': SITE_URL + '/assets/img/hero-goteborg-1920.jpg',
+        'image': SITE_URL + '/assets/img/goteborg-skymning-1920.jpg',
         'telephone': COMPANY['phone_href'],
         'email': COMPANY['email'],
         'foundingDate': '2019',
@@ -616,7 +594,7 @@ def layout(meta, body_html):
     full_title = title if meta.get('full_title') else f'{title} | AMT Bygg'
     canonical = SITE_URL + '/' + meta['path']
     body_cls = ' class="has-hero"' if meta.get('hero') else ''
-    og_img = SITE_URL + '/assets/img/' + meta.get('og', 'hero-goteborg') + '-1280.jpg'
+    og_img = SITE_URL + '/assets/img/' + meta.get('og', 'goteborg-skymning') + '-1280.jpg'
     robots = '<meta name="robots" content="noindex">' if meta.get('noindex') else ''
     ld = f'<script type="application/ld+json">{jsonld(meta)}</script>' if meta['path'] == '' else ''
     return f'''<!doctype html>
@@ -636,11 +614,11 @@ def layout(meta, body_html):
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{og_img}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#12161f">
+<meta name="theme-color" content="#131f40">
 <link rel="icon" href="{ctx.asset('brand/favicon.svg')}" type="image/svg+xml">
 <link rel="icon" href="{ctx.asset('brand/favicon-32.png')}" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="{ctx.asset('brand/apple-touch-icon.png')}">
-<link rel="preload" href="{ctx.asset('fonts/Sora-normal-300_700.woff2')}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{ctx.asset('fonts/Montserrat-normal-100_900.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{ctx.asset('fonts/HankenGrotesk-normal-300_700.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{ctx.asset('css/fonts.css')}">
 <link rel="stylesheet" href="{ctx.asset('css/patterns.css')}">
