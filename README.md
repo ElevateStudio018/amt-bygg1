@@ -42,4 +42,4 @@ Bilderna `goteborg-*` och `bygg-arbetsplats` kommer från Unsplash (fri att anv�
 | `goteborg-eriksberg` | Jeet Datta |
 | `bygg-arbetsplats` | Glenov Brankovic |
 
-Startsidans film (`assets/video/hero-stad-*.mp4`, stillbild `assets/img/hero-stad-poster.jpg`) är Mixkit-klipp 4010 under Mixkit License (fri att använda kommersiellt). Den är komprimerad med ffmpeg (H.264, CRF 31, utan ljud): 1600 px för dator och 960 px för mobil.
+Startsidans film (`assets/video/hero-stad-*.mp4`, stillbild `assets/img/hero-stad-poster.jpg`) är Mixkit-klipp 4010 under Mixkit License (fri att använda kommersiellt). Den är komprimerad med ffmpeg utan ljud, i två format: WebM/VP9 (CRF 50) och MP4/H.264 (CRF 31) som reserv. Båda finns i 1600 px för dator och 960 px för mobil.
