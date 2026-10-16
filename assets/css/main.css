@@ -307,21 +307,33 @@ strong { font-weight: 650; }
 }
 
 /* ---------- Hero (start) ---------- */
-/* Ren helbild under en fast meny: stor rubrik, en mening, en länk */
-.hero { position: relative; height: min(calc(100svh - var(--header-h)), 820px); min-height: 520px; color: var(--white); background: var(--navy-900); overflow: hidden; isolation: isolate; display: flex; align-items: flex-end; }
-.hero__media { position: absolute; inset: 0; z-index: -2; }
-.hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 42%; }
-.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(10, 16, 32, .72) 0%, rgba(10, 16, 32, .28) 42%, rgba(10, 16, 32, 0) 70%); }
-.hero__body { padding-bottom: clamp(48px, 7vw, 96px); }
-.hero h1 { font-size: clamp(2.4rem, 1.2rem + 4vw, 5.2rem); font-weight: 700; line-height: 1.02; letter-spacing: -.03em; max-width: 14ch; }
-.hero__lead { margin-top: 22px; max-width: 44ch; font-size: clamp(1.05rem, 1rem + .35vw, 1.3rem); color: rgba(255, 255, 255, .9); }
-.hero__link { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; font-family: var(--f-display); font-weight: 600; font-size: 1rem; padding-bottom: 6px; border-bottom: 2px solid var(--white); transition: gap .3s var(--ease), border-color .3s var(--ease); }
-.hero__link .arr { width: 18px; height: 1.5px; background: currentColor; position: relative; }
-.hero__link .arr::after { content: ""; position: absolute; right: 0; top: -3px; width: 7px; height: 7px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
-.hero__link:hover { gap: 20px; border-color: var(--gold); }
-@media (max-width: 760px) {
-  .hero { height: 78svh; min-height: 460px; }
-  .hero__media picture, .hero__media img { object-position: 72% 50%; }
+/* Delad hero som hos ByggDialog/Veidekke: marinblått block med rubrik till vänster, foto till höger */
+.hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: min(calc(100svh - var(--header-h)), 820px); background: var(--navy); color: var(--white); }
+.hero__panel { position: relative; display: flex; flex-direction: column; justify-content: center; padding: clamp(48px, 6vw, 96px) clamp(32px, 5vw, 88px) clamp(96px, 9vw, 128px) max(var(--gutter), calc((100vw - var(--max)) / 2)); background: var(--navy); overflow: hidden; isolation: isolate; }
+.hero__panel::before { content: ""; position: absolute; z-index: -1; right: -14%; bottom: -18%; width: 78%; aspect-ratio: 1; background: url("../brand/amt-mark-white.svg") no-repeat center / contain; opacity: .045; }
+.hero__inner { max-width: 560px; }
+.hero__kicker { font-family: var(--f-label); font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.hero h1 { margin-top: 22px; font-size: clamp(2.2rem, 1.1rem + 2.9vw, 4.2rem); font-weight: 700; line-height: 1.06; letter-spacing: -.025em; }
+.hero__lead { margin-top: 24px; font-size: clamp(1.02rem, .98rem + .3vw, 1.2rem); line-height: 1.6; color: rgba(255, 255, 255, .82); }
+.hero .btn-row { margin-top: 36px; }
+.btn--outline-light { --btn-bg: transparent; --btn-fg: var(--white); --btn-bd: rgba(255, 255, 255, .5); }
+.btn--outline-light:hover { --btn-bg: var(--white); --btn-fg: var(--navy); --btn-bd: var(--white); }
+.hero__scroll { position: absolute; left: max(var(--gutter), calc((100vw - var(--max)) / 2)); bottom: clamp(28px, 4vw, 44px); display: inline-flex; align-items: center; gap: 14px; font-family: var(--f-label); font-size: .7rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(255, 255, 255, .7); }
+.hero__scroll::before { content: ""; width: 1px; height: 36px; background: linear-gradient(180deg, rgba(255, 255, 255, 0), var(--gold)); }
+.hero__scroll:hover { color: var(--white); }
+.hero__media { position: relative; overflow: hidden; background: var(--navy-900); }
+.hero__media picture, .hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 40%; }
+.hero__media img { animation: hero-in 1.6s var(--ease) both; }
+.hero__inner > * { animation: fade .9s var(--ease) both; }
+.hero__inner > :nth-child(2) { animation-delay: .08s; }
+.hero__inner > :nth-child(3) { animation-delay: .16s; }
+.hero__inner > :nth-child(4) { animation-delay: .24s; }
+@keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes hero-in { from { transform: scale(1.06); opacity: .6; } to { transform: none; opacity: 1; } }
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero__media { order: -1; height: 52svh; min-height: 300px; }
+  .hero__panel { padding: 44px var(--gutter) 88px; }
 }
 
 /* ---------- Sidhero (undersidor) ---------- */
