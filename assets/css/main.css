@@ -307,24 +307,21 @@ strong { font-weight: 650; }
 }
 
 /* ---------- Hero (start) ---------- */
-/* Helbild med rak underkant och en vit textpanel som går ned i nästa sektion */
-.hero { position: relative; color: var(--text); background: var(--paper); isolation: isolate; }
-.hero__media { position: relative; height: clamp(520px, 78svh, 860px); overflow: hidden; background: var(--navy-900); }
-.hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 40%; }
-.hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(19, 31, 64, .55) 0%, rgba(19, 31, 64, 0) 26%); }
-.hero__wrap { position: relative; }
-.hero__panel {
-  position: relative; z-index: 2; margin-top: clamp(-260px, -18vw, -140px); width: min(680px, 100%);
-  background: var(--white); border-radius: var(--r); box-shadow: 0 30px 60px -30px rgba(19, 31, 64, .35);
-  padding: clamp(32px, 4vw, 56px) clamp(28px, 4vw, 56px) clamp(32px, 4vw, 52px);
-}
-.hero h1 { margin-top: 18px; font-size: clamp(2rem, 1.2rem + 2.4vw, 3.4rem); line-height: 1.08; letter-spacing: -.02em; color: var(--navy); }
-.hero__lead { margin-top: 20px; max-width: 46ch; font-size: clamp(1.02rem, 1rem + .25vw, 1.18rem); color: var(--muted); }
-.hero .btn-row { margin-top: 32px; }
-.hero + .section { padding-top: clamp(56px, 7vw, 112px); }
+/* Ren helbild under en fast meny: stor rubrik, en mening, en länk */
+.hero { position: relative; height: min(calc(100svh - var(--header-h)), 820px); min-height: 520px; color: var(--white); background: var(--navy-900); overflow: hidden; isolation: isolate; display: flex; align-items: flex-end; }
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 42%; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(10, 16, 32, .72) 0%, rgba(10, 16, 32, .28) 42%, rgba(10, 16, 32, 0) 70%); }
+.hero__body { padding-bottom: clamp(48px, 7vw, 96px); }
+.hero h1 { font-size: clamp(2.4rem, 1.2rem + 4vw, 5.2rem); font-weight: 700; line-height: 1.02; letter-spacing: -.03em; max-width: 14ch; }
+.hero__lead { margin-top: 22px; max-width: 44ch; font-size: clamp(1.05rem, 1rem + .35vw, 1.3rem); color: rgba(255, 255, 255, .9); }
+.hero__link { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; font-family: var(--f-display); font-weight: 600; font-size: 1rem; padding-bottom: 6px; border-bottom: 2px solid var(--white); transition: gap .3s var(--ease), border-color .3s var(--ease); }
+.hero__link .arr { width: 18px; height: 1.5px; background: currentColor; position: relative; }
+.hero__link .arr::after { content: ""; position: absolute; right: 0; top: -3px; width: 7px; height: 7px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
+.hero__link:hover { gap: 20px; border-color: var(--gold); }
 @media (max-width: 760px) {
-  .hero__media { height: 62svh; min-height: 380px; }
-  .hero__panel { margin-top: -64px; }
+  .hero { height: 78svh; min-height: 460px; }
+  .hero__media picture, .hero__media img { object-position: 72% 50%; }
 }
 
 /* ---------- Sidhero (undersidor) ---------- */
