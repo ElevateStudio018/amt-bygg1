@@ -307,44 +307,24 @@ strong { font-weight: 650; }
 }
 
 /* ---------- Hero (start) ---------- */
-.hero {
-  position: relative; height: 100svh; min-height: 640px; max-height: 1080px;
-  color: var(--white); background: var(--navy-900); overflow: hidden; isolation: isolate;
-  display: flex; align-items: flex-end;
+/* Helbild med rak underkant och en vit textpanel som går ned i nästa sektion */
+.hero { position: relative; color: var(--text); background: var(--paper); isolation: isolate; }
+.hero__media { position: relative; height: clamp(520px, 78svh, 860px); overflow: hidden; background: var(--navy-900); }
+.hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 40%; }
+.hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(19, 31, 64, .55) 0%, rgba(19, 31, 64, 0) 26%); }
+.hero__wrap { position: relative; }
+.hero__panel {
+  position: relative; z-index: 2; margin-top: clamp(-260px, -18vw, -140px); width: min(680px, 100%);
+  background: var(--white); border-radius: var(--r); box-shadow: 0 30px 60px -30px rgba(19, 31, 64, .35);
+  padding: clamp(32px, 4vw, 56px) clamp(28px, 4vw, 56px) clamp(32px, 4vw, 52px);
 }
-.hero__media { position: absolute; inset: 0; z-index: -2; }
-.hero__media picture, .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 45%; }
-.hero__media img { animation: hero-zoom 14s var(--ease) both; }
-.hero::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(90deg, rgba(19, 31, 64, .72) 0%, rgba(19, 31, 64, .38) 40%, rgba(19, 31, 64, 0) 70%),
-              linear-gradient(180deg, rgba(19, 31, 64, .5) 0%, rgba(19, 31, 64, 0) 22%);
-}
-.hero__body { padding-bottom: calc(clamp(90px, 14vw, 230px) + clamp(8px, 2vh, 32px)); }
-.hero h1 {
-  font-size: clamp(2.3rem, 1.2rem + 3.8vw, 4.8rem); font-weight: 700;
-  letter-spacing: -.025em; line-height: 1.04; max-width: 15ch;
-}
-.hero__lead { margin-top: 24px; max-width: 46ch; font-size: clamp(1.05rem, 1rem + .35vw, 1.3rem); color: rgba(255, 255, 255, .9); }
-.hero .btn { margin-top: 36px; }
-.hero__body > * { animation: fade 1s var(--ease) both; }
-.hero__body > :nth-child(2) { animation-delay: .1s; }
-.hero__body > :nth-child(3) { animation-delay: .2s; }
-@keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-@keyframes hero-zoom { from { transform: scale(1.08); } to { transform: none; } }
-
-/* Ljus våg med blått och guld svep i herons nederkant */
-.hero__edge { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: clamp(90px, 14vw, 230px); z-index: 1; pointer-events: none; }
-.hero__edge-fill { fill: var(--paper); }
-.sw--blue { fill: var(--blue); }
-.sw--gold { fill: var(--gold); }
-.hero__edge .sw { animation: sweep 1.6s var(--ease) .35s both; }
-.hero__edge .sw--gold { animation-delay: .55s; }
-@keyframes sweep { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.hero h1 { margin-top: 18px; font-size: clamp(2rem, 1.2rem + 2.4vw, 3.4rem); line-height: 1.08; letter-spacing: -.02em; color: var(--navy); }
+.hero__lead { margin-top: 20px; max-width: 46ch; font-size: clamp(1.02rem, 1rem + .25vw, 1.18rem); color: var(--muted); }
+.hero .btn-row { margin-top: 32px; }
+.hero + .section { padding-top: clamp(56px, 7vw, 112px); }
 @media (max-width: 760px) {
-  .hero { height: auto; min-height: 92svh; }
-  .hero__body { padding-top: calc(var(--header-h) + 48px); }
-  .hero__media picture, .hero__media img { object-position: 72% 50%; }
+  .hero__media { height: 62svh; min-height: 380px; }
+  .hero__panel { margin-top: -64px; }
 }
 
 /* ---------- Sidhero (undersidor) ---------- */
