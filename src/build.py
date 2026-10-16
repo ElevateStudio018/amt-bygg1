@@ -219,6 +219,12 @@ def p_areas(ctx, arg=''):
     return ''.join(out)
 
 
+def p_herolinks(ctx, arg=''):
+    """Genvägar till affärsområdena i nederkanten av startsidans hero."""
+    return ''.join(f'<a href="{ctx.url(a["slug"])}"><span class="hero__bar-title">{a["title"]}</span>'
+                   f'<span class="hero__bar-text">{a["short"]}</span>{arrow()}</a>' for a in AREAS)
+
+
 def p_logowall(ctx, arg=''):
     ids = arg.split(',') if arg else [c['id'] for c in CLIENTS]
     cols = 5 if len(ids) >= 9 else min(len(ids), 4)
@@ -414,7 +420,7 @@ def p_damageform(ctx, arg=''):
 
 
 PARTIALS = {
-    'areas': p_areas, 'logowall': p_logowall, 'crestwall': p_crestwall, 'agreements': p_agreements,
+    'areas': p_areas, 'herolinks': p_herolinks, 'logowall': p_logowall, 'crestwall': p_crestwall, 'agreements': p_agreements,
     'clients': p_clients, 'partners': p_partners, 'cta': p_cta, 'areanav': p_areanav,
     'contactform': p_contactform, 'damageform': p_damageform,
 }
@@ -573,7 +579,7 @@ def jsonld(meta):
         'legalName': COMPANY['legal'],
         'url': SITE_URL + '/',
         'logo': SITE_URL + '/assets/brand/icon-512.png',
-        'image': SITE_URL + '/assets/img/hero-goteborg-1920.jpg',
+        'image': SITE_URL + '/assets/img/hero-hantverkare-1920.jpg',
         'telephone': COMPANY['phone_href'],
         'email': COMPANY['email'],
         'foundingDate': '2019',
@@ -594,7 +600,7 @@ def layout(meta, body_html):
     full_title = title if meta.get('full_title') else f'{title} | AMT Bygg'
     canonical = SITE_URL + '/' + meta['path']
     body_cls = ' class="has-hero"' if meta.get('hero') else ''
-    og_img = SITE_URL + '/assets/img/' + meta.get('og', 'hero-goteborg') + '-1280.jpg'
+    og_img = SITE_URL + '/assets/img/' + meta.get('og', 'hero-hantverkare') + '-1280.jpg'
     robots = '<meta name="robots" content="noindex">' if meta.get('noindex') else ''
     ld = f'<script type="application/ld+json">{jsonld(meta)}</script>' if meta['path'] == '' else ''
     return f'''<!doctype html>

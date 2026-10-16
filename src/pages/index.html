@@ -1,19 +1,18 @@
 <!--meta {"title": "AMT Bygg – Byggentreprenad i Göteborg | Skadereparationer, lokalanpassningar och entreprenad", "full_title": true, "description": "AMT Bygg är ett modernt byggbolag med starka traditioner. Skadereparationer, lokalanpassningar och entreprenad i Göteborgsregionen – effektivt, transparent och tillsammans med er.", "path": "", "nav": "start"} -->
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__panel">
-    <div class="hero__inner">
-      <p class="hero__kicker">AMT Bygg – Tillsammans</p>
-      <h1 id="hero-title">Ett modernt byggbolag med starka traditioner</h1>
-      <p class="hero__lead">Skadereparationer, lokalanpassningar och entreprenad för försäkringsbolag, fastighetsägare och byggföretag i Göteborgsregionen.</p>
-      <div class="btn-row">
-        <a class="btn btn--gold" href="{{url affarsomraden/}}">Våra affärsområden {{arrow}}</a>
-        <a class="btn btn--outline-light" href="{{url kontakt/}}">Kontakta oss</a>
-      </div>
+  <div class="hero__media">{{pic hero-hantverkare|Hantverkare med hjälm och hörselskydd i en byggställning|(max-width: 760px) 1280px, 100vw||eager}}</div>
+  <div class="wrap hero__body">
+    <h1 id="hero-title">Ett modernt byggbolag med starka traditioner</h1>
+    <p class="hero__lead">Skadereparationer, lokalanpassningar och entreprenad i Göteborgsregionen – sedan 2019.</p>
+    <div class="btn-row">
+      <a class="btn btn--gold" href="{{url affarsomraden/}}">Våra affärsområden {{arrow}}</a>
+      <a class="btn btn--outline-light" href="{{url kontakt/}}">Kontakta oss</a>
     </div>
-    <a class="hero__scroll" href="#om-title"><span>Om oss</span></a>
   </div>
-  <div class="hero__media">{{pic hero-goteborg|Hantverkare från AMT Bygg blickar ut över Göteborgs hamn|(max-width: 900px) 1280px, 60vw||eager}}</div>
+  <nav class="hero__bar" aria-label="Affärsområden">
+    <div class="wrap">{{> herolinks}}</div>
+  </nav>
 </section>
 
 <section class="section bg-paper" aria-labelledby="om-title">

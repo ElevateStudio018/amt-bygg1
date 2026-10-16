@@ -15,6 +15,7 @@ Kräver Python 3 med Pillow (för bildmått). `python3 src/patterns.py` generera
 
 | Sökväg | Innehåll |
 | --- | --- |
+| `hero-hantverkare` (startsidans hero, Falun) | Jimmy Nilsson Masth |
 | `src/pages/*.html` | Sidornas innehåll (redigera här, inte i de byggda filerna) |
 | `src/build.py` | Sidmall, meny, sidfot, klienter, partners, ramavtal och kontaktuppgifter |
 | `src/patterns.py` | Materialmönster i loggans färger: träådring, fiskben, regelverk, tegel, snitt, rutnät |
@@ -34,7 +35,7 @@ Gamla adressen `/skadereparation` pekar vidare till `/anmal-skada/`.
 
 Rubriker, meny och etiketter använder Montserrat (SIL Open Font License), som ligger närmast loggans geometriska bokstäver. Brödtext är Hanken Grotesk. Båda ligger lokalt i `assets/fonts/`.
 
-Bilderna `goteborg-*` och `bygg-stockholm` kommer från Unsplash (fri att använda kommersiellt, ingen attribuering krävs):
+Bilderna `hero-hantverkare`, `goteborg-*` och `bygg-stockholm` kommer från Unsplash (fri att använda kommersiellt, ingen attribuering krävs):
 
 | Fil | Fotograf |
 | --- | --- |
