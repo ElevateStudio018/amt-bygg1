@@ -124,7 +124,7 @@ NAV = [
 
 COMPANY_LINKS = [
     {'href': 'om-oss/', 'title': 'Om AMT Bygg', 'text': 'Ett modernt byggbolag med starka traditioner – grundat i Göteborg 2019.', 'img': 'hero-goteborg', 'alt': 'Hantverkare blickar ut över Göteborgs hamn'},
-    {'href': 'om-oss/ledningssystem/', 'title': 'Ledningssystem', 'text': 'Certifierade i Povel – kvalitet, miljö och arbetsmiljö i ett system.', 'img': 'bygg-arbetsplats', 'alt': 'Byggarbetare armerar på en arbetsplats'},
+    {'href': 'om-oss/ledningssystem/', 'title': 'Ledningssystem', 'text': 'Certifierade i Povel – kvalitet, miljö och arbetsmiljö i ett system.', 'img': 'bygg-stockholm', 'alt': 'Tornkranar över ett bygge i Stockholm i kvällsljus'},
     {'href': 'karriar/', 'title': 'Karriär', 'text': 'Vi söker servicesnickare. Bli en del av ett framgångsrikt team.', 'img': 'renovering', 'alt': 'Snickare sågar en skiva med cirkelsåg'},
 ]
 
@@ -583,7 +583,7 @@ def jsonld(meta):
         'legalName': COMPANY['legal'],
         'url': SITE_URL + '/',
         'logo': SITE_URL + '/assets/brand/icon-512.png',
-        'image': SITE_URL + '/assets/img/hero-stad-poster.jpg',
+        'image': SITE_URL + '/assets/img/hero-goteborg-poster.jpg',
         'telephone': COMPANY['phone_href'],
         'email': COMPANY['email'],
         'foundingDate': '2019',
