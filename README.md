@@ -34,11 +34,12 @@ Gamla adressen `/skadereparation` pekar vidare till `/anmal-skada/`.
 
 Rubriker, meny och etiketter använder Montserrat (SIL Open Font License), som ligger närmast loggans geometriska bokstäver. Brödtext är Hanken Grotesk. Båda ligger lokalt i `assets/fonts/`.
 
-Bilderna `hero-byggkranar`, `goteborg-*` och `bygg-arbetsplats` kommer från Unsplash (fri att använda kommersiellt, ingen attribuering krävs):
+Bilderna `goteborg-*` och `bygg-arbetsplats` kommer från Unsplash (fri att använda kommersiellt, ingen attribuering krävs):
 
 | Fil | Fotograf |
 | --- | --- |
-| `hero-byggkranar` (startsidans hero) | Marek Minor |
 | `goteborg-kranar`, `goteborg-hamn` | Dmitrii E. |
 | `goteborg-eriksberg` | Jeet Datta |
 | `bygg-arbetsplats` | Glenov Brankovic |
+
+Startsidans film (`assets/video/hero-stad-*.mp4`, stillbild `assets/img/hero-stad-poster.jpg`) är Mixkit-klipp 4010 under Mixkit License (fri att använda kommersiellt). Den är komprimerad med ffmpeg (H.264, CRF 31, utan ljud): 1600 px för dator och 960 px för mobil.
