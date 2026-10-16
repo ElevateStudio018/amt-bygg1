@@ -620,7 +620,7 @@ def layout(meta, body_html):
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{og_img}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#131f40">
+<meta name="theme-color" content="#122a6e">
 <link rel="icon" href="{ctx.asset('brand/favicon.svg')}" type="image/svg+xml">
 <link rel="icon" href="{ctx.asset('brand/favicon-32.png')}" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="{ctx.asset('brand/apple-touch-icon.png')}">
