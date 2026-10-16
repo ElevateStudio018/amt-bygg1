@@ -1,29 +1,17 @@
 <!--meta {"title": "AMT Bygg – Byggentreprenad i Göteborg | Skadereparationer, lokalanpassningar och entreprenad", "full_title": true, "description": "AMT Bygg är ett modernt byggbolag med starka traditioner. Skadereparationer, lokalanpassningar och entreprenad i Göteborgsregionen – effektivt, transparent och tillsammans med er.", "path": "", "nav": "start", "hero": true} -->
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__media">
-    <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="{{asset img/hero-goteborg-poster.jpg}}" aria-hidden="true">
-      <source src="{{asset video/hero-goteborg-960.webm}}" type="video/webm" media="(max-width: 760px)">
-      <source src="{{asset video/hero-goteborg-960.mp4}}" type="video/mp4" media="(max-width: 760px)">
-      <source src="{{asset video/hero-goteborg-1600.webm}}" type="video/webm">
-      <source src="{{asset video/hero-goteborg-1600.mp4}}" type="video/mp4">
-    </video>
-  </div>
+  <div class="hero__media">{{pic hero-goteborg|Byggarbetare blickar ut över Göteborgs hamn med varvskranar och stadssiluett|(max-width: 760px) 1280px, 100vw||eager}}</div>
   <div class="wrap hero__body">
-    <span class="hero__kicker">Byggentreprenör i Göteborgsregionen sedan 2019</span>
     <h1 id="hero-title">Ett modernt byggbolag med starka traditioner</h1>
-    <p class="hero__lead">Skadereparationer, lokalanpassningar och entreprenad – för försäkringsbolag, fastighetsägare och byggföretag.</p>
-    <div class="btn-row">
-      <a class="btn btn--gold" href="{{url kontakt/}}">Kontakta oss {{arrow}}</a>
-      <a class="btn btn--ghost-light" href="{{url anmal-skada/}}">Anmäl skada</a>
-    </div>
+    <p class="hero__lead">Skadereparationer, lokalanpassningar och entreprenad i Göteborgsregionen.</p>
+    <a class="btn btn--light" href="{{url affarsomraden/}}">Våra affärsområden {{arrow}}</a>
   </div>
-  <div class="hero__bar">
-    <div class="wrap">
-      {{> herolinks}}
-      <button class="hero__pause" type="button" aria-pressed="false" data-video-toggle><span class="visually-hidden">Pausa filmen</span></button>
-    </div>
-  </div>
+  <svg class="hero__edge" viewBox="0 0 1600 240" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="hero__edge-fill" d="M0 240V214C420 206 900 150 1240 92C1380 68 1500 52 1600 46V240Z"/>
+    <path class="sw sw--blue" d="M-20 206C420 198 880 146 1220 86C1370 60 1490 42 1620 34C1500 54 1390 74 1240 104C900 170 430 214-20 206Z"/>
+    <path class="sw sw--gold" d="M360 216C740 196 1060 150 1320 102C1430 82 1530 70 1620 66C1530 82 1440 98 1340 118C1080 172 760 214 360 216Z"/>
+  </svg>
 </section>
 
 <section class="section bg-paper" aria-labelledby="om-title">

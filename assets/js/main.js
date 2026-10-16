@@ -71,23 +71,6 @@
     reveals.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* Herofilm: paus-knapp, och stillbild för den som valt reducerad rörelse */
-  var heroVideo = document.querySelector('.hero__video');
-  var videoToggle = document.querySelector('[data-video-toggle]');
-  if (heroVideo && videoToggle) {
-    var label = videoToggle.querySelector('.visually-hidden');
-    function setPaused(paused) {
-      paused ? heroVideo.pause() : heroVideo.play().catch(function () {});
-      videoToggle.setAttribute('aria-pressed', String(paused));
-      label.textContent = paused ? 'Spela filmen' : 'Pausa filmen';
-    }
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      heroVideo.removeAttribute('autoplay');
-      setPaused(true);
-    }
-    videoToggle.addEventListener('click', function () { setPaused(!heroVideo.paused); });
-  }
-
   /* Diskret parallax på helbreddsbilder */
   var bleeds = document.querySelectorAll('.bleed img');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -41,5 +41,3 @@ Bilderna `goteborg-*` och `bygg-stockholm` kommer från Unsplash (fri att använ
 | `goteborg-kranar`, `goteborg-hamn` | Dmitrii E. |
 | `goteborg-eriksberg` | Jeet Datta |
 | `bygg-stockholm` | Ola Grönlund |
-
-Startsidans film (`assets/video/hero-goteborg-*`, stillbild `assets/img/hero-goteborg-poster.jpg`) är ett montage av tre Pexels-klipp från Göteborg (Pexels License, fri att använda kommersiellt): Karlatornet (36897191), staden från ovan (38251198) och hamnen med varvskranarna (30859021). Den är komprimerad med ffmpeg utan ljud, i två format: WebM/VP9 och MP4/H.264 som reserv. Båda finns i 1600 px för dator och 960 px för mobil.
