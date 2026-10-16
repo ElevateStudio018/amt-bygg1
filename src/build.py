@@ -12,6 +12,7 @@ Följande taggar kan användas i sidorna:
     {{url sida/}}                        relativ länk till en annan sida
     {{asset sökväg}}                     relativ länk till en fil i assets/
 """
+import hashlib
 import json
 import os
 import posixpath
@@ -151,8 +152,18 @@ class Ctx:
 
     def asset(self, p):
         if self.absolute:
-            return '/assets/' + p
-        return posixpath.relpath('assets/' + p, self.path or '.')
+            url = '/assets/' + p
+        else:
+            url = posixpath.relpath('assets/' + p, self.path or '.')
+        if p.endswith(('.css', '.js')):
+            url += '?v=' + file_version(p)
+        return url
+
+
+def file_version(p):
+    """Kort hash av filens innehåll, så att webbläsare hämtar om ändrade CSS/JS-filer."""
+    with open(os.path.join(ROOT, 'assets', p), 'rb') as fh:
+        return hashlib.md5(fh.read()).hexdigest()[:8]
 
 
 def img_widths(name):
@@ -207,7 +218,6 @@ def p_areas(ctx, arg=''):
       <article class="area reveal" style="--d:{i * .08:.2f}s">
         <div class="area__media">
           {pic(ctx, a['img'], a['alt'], '(max-width: 980px) 100vw, 33vw')}
-          <span class="area__num">{a['num']} / 03</span>
         </div>
         <div class="area__body">
           <h3>{a['title']}</h3>
@@ -333,7 +343,7 @@ def p_areanav(ctx, arg=''):
         out.append(f'''
       <a class="cell reveal" href="{ctx.url(a['slug'])}">
         <div class="cell__img">{pic(ctx, a['img'], a['alt'], '(max-width: 620px) 100vw, 50vw')}</div>
-        <span class="cell__tag">Affärsområde {a['num']}</span>
+        <span class="cell__tag">Affärsområde</span>
         <h3>{a['title']}</h3>
         <p>{a['short']}</p>
         <span class="link-arrow mt-s"><span>Läs mer</span>{arrow()}</span>
@@ -473,12 +483,12 @@ def header(ctx, active):
 
     mobile_items = []
     for i, n in enumerate(NAV):
-        mobile_items.append(f'<li><a href="{ctx.url(n["href"])}">{n["label"]}<small>{i + 1:02d}</small></a></li>')
+        mobile_items.append(f'<li><a href="{ctx.url(n["href"])}">{n["label"]}</a></li>')
         if n.get('mega') == 'areas':
             mobile_items.append('<li class="sub"><ul>' + ''.join(f'<li><a href="{ctx.url(a["slug"])}">{a["title"]}</a></li>' for a in AREAS) + '</ul></li>')
         if n.get('mega') == 'company':
             mobile_items.append('<li class="sub"><ul>' + ''.join(f'<li><a href="{ctx.url(c["href"])}">{c["title"]}</a></li>' for c in COMPANY_LINKS[1:]) + '</ul></li>')
-    mobile_items.append(f'<li><a href="{ctx.url("anmal-skada/")}">Anmäl skada<small>{len(NAV) + 1:02d}</small></a></li>')
+    mobile_items.append(f'<li><a href="{ctx.url("anmal-skada/")}">Anmäl skada</a></li>')
 
     return f'''
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
