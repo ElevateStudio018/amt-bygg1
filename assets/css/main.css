@@ -664,6 +664,8 @@ a.cell:hover .cell__img img { transform: scale(1.04); }
 .footer-badges a { display: flex; align-items: center; justify-content: center; height: 66px; padding: 0 18px; border: 1px solid rgba(255, 255, 255, .85); border-radius: var(--r-sm); transition: border-color .2s, background .2s; }
 .footer-badges a:hover { background: rgba(255, 255, 255, .06); border-color: var(--white); }
 .footer-badges img { height: 38px; width: auto; }
+.footer-badges .footer-badges__plain, .footer-badges .footer-badges__plain:hover { border: 0; padding: 0; background: none; }
+.footer-badges__plain img { height: 46px; }
 .footer-badges__round { width: 66px; padding: 0 !important; border-radius: 50% !important; }
 .footer-badges__round img { height: 54px; }
 .footer-bottom { background: rgba(0, 0, 0, .14); }

@@ -525,7 +525,7 @@ def footer(ctx):
         <div class="tagline">TILLSAMMANS</div>
         <p>Ett modernt byggbolag med starka traditioner. Skadereparationer, lokalanpassningar och entreprenad i Göteborgsregionen.</p>
         <div class="footer-badges">
-          <a href="https://www.di.se/amnen/di-gasell/" target="_blank" rel="noopener" aria-label="Di Gasell 2025"><img src="{ctx.asset('logos/gasell-2025-white.png')}" alt="Di Gasell 2025" loading="lazy"></a>
+          <a class="footer-badges__plain" href="https://www.di.se/amnen/di-gasell/" target="_blank" rel="noopener" aria-label="Di Gasell 2025"><img src="{ctx.asset('logos/gasell-2025-white.png')}" alt="Di Gasell 2025" loading="lazy"></a>
           <a class="footer-badges__round" href="{ctx.url('om-oss/ledningssystem/')}" aria-label="Certifierade i Povel"><img src="{ctx.asset('logos/povel-white.png')}" alt="Povel – processorienterad verksamhetsledning" loading="lazy"></a>
         </div>
       </div>
