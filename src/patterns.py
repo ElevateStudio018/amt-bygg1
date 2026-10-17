@@ -5,32 +5,32 @@ Kör: python3 src/patterns.py  -> assets/patterns/*.svg + assets/css/patterns.cs
 import math, random, base64, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-NAVY, BLUE, GOLD = '#1b2b55', '#149eda', '#e8bd5a'
+NAVY, BLUE, GOLD = '#122a6e', '#0a9cf0', '#d9a21b'
 
 
-def wood(width=1200, height=1600, spacing=16, seed=7, stroke=BLUE, sw=1.1):
-    """Träådring: vertikala linjer som viker undan för kvistar, som i AMT:s eget mönster."""
-    rnd = random.Random(seed)
-    knots = [(rnd.uniform(.1, .9) * width, rnd.uniform(.08, .92) * height, rnd.uniform(28, 70)) for _ in range(7)]
+def wood(width=1600, height=900, spacing=24, stroke=BLUE, sw=1,
+         knots=((1085, 300, 62, 120), (420, 700, 44, 86))):
+    """Träådring: jämnt fördelade vertikala linjer som glider isär runt kvistar.
+
+    Förskjutningen är monoton i linjens läge, så grannlinjer korsas eller trycks aldrig ihop.
+    knots = (x, y, öppningens halva bredd, halva höjd).
+    """
+    def warp(b, y):
+        x = b
+        for kx, ky, r, ry in knots:
+            dx = b - kx
+            t = (y - ky) / (ry * 1.6)
+            x += (1 if dx >= 0 else -1) * r * math.exp(-t * t) * math.exp(-(dx / (2 * r)) ** 2)
+        return x + 8 * math.sin(y / 170 + b / 260) + 3 * math.sin(y / 63 + b / 90)
+
     paths = []
-    n = int(width / spacing) + 6
-    for i in range(-3, n):
-        x0 = i * spacing
-        ph = rnd.uniform(0, 6.28)
-        pts = []
-        for y in range(-20, height + 21, 12):
-            x = x0 + 9 * math.sin(y / 260 + ph * .2) + 4 * math.sin(y / 90 + i * .35)
-            for kx, ky, r in knots:
-                dx, dy = x - kx, (y - ky) * .38
-                d2 = dx * dx + dy * dy
-                x += 1.9 * r * r * dx / (d2 + r * r * .35)
-            pts.append((x, y))
-        d = 'M' + ' L'.join(f'{x:.0f} {y}' for x, y in pts)
+    for b0 in range(-72, width + 80, spacing):
+        b = b0 + spacing / 2
+        d = 'M' + ' L'.join(f'{warp(b, y):.1f} {y}' for y in range(-20, height + 21, 10))
         paths.append(f'<path d="{d}"/>')
-    for kx, ky, r in knots:
-        for k in range(1, 5):
-            rx, ry = r * .18 * k, r * .62 * k
-            paths.append(f'<ellipse cx="{kx:.1f}" cy="{ky:.1f}" rx="{rx:.1f}" ry="{ry:.1f}"/>')
+    for kx, ky, r, ry in knots:
+        for f in (.82, .58, .36, .15):
+            paths.append(f'<ellipse cx="{kx}" cy="{ky}" rx="{r * f:.1f}" ry="{ry * f * .9:.1f}"/>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" preserveAspectRatio="xMidYMid slice">'
             f'<g fill="none" stroke="{stroke}" stroke-width="{sw}" vector-effect="non-scaling-stroke">' + ''.join(paths) + '</g></svg>')
 
@@ -94,8 +94,8 @@ def main():
     pdir = os.path.join(ROOT, 'assets', 'patterns')
     os.makedirs(pdir, exist_ok=True)
     open(os.path.join(pdir, 'wood-blue.svg'), 'w').write(wood())
-    open(os.path.join(pdir, 'wood-navy.svg'), 'w').write(wood(stroke=NAVY, seed=11))
-    open(os.path.join(pdir, 'wood-gold.svg'), 'w').write(wood(stroke=GOLD, seed=3))
+    open(os.path.join(pdir, 'wood-navy.svg'), 'w').write(wood(stroke=NAVY))
+    open(os.path.join(pdir, 'wood-gold.svg'), 'w').write(wood(stroke=GOLD))
     tones = {'blue': BLUE, 'navy': NAVY, 'gold': GOLD, 'white': '#ffffff'}
     gens = {'parquet': herringbone, 'studs': studs, 'brick': brick, 'hatch': hatch, 'grid': grid}
     css = ['/* Genererad av src/patterns.py – redigera inte för hand */']
