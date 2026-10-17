@@ -8,32 +8,76 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NAVY, BLUE, GOLD = '#122a6e', '#0a9cf0', '#d9a21b'
 
 
-def wood(width=1600, height=900, spacing=34, stroke=BLUE, sw=1,
-         knots=((1120, 250, 62, 118), (420, 690, 50, 92), (760, 120, 36, 70),
-                (1430, 700, 44, 84), (180, 230, 34, 66), (900, 600, 30, 58), (640, 820, 24, 46))):
-    """Träådring: jämnt fördelade vertikala linjer som glider isär runt kvistar.
+WOOD_KNOTS = (
+    # x, y, halva bredden, halva höjden, styrka (negativ = kvisten vänder åt andra hållet)
+    (1240, 300, 80, 200, 4.4), (330, 520, 72, 190, -4.2), (820, 330, 46, 130, 3.4),
+    (1520, 640, 56, 160, -3.6), (90, 300, 44, 130, 3.2), (640, 640, 40, 110, -3.0),
+)
 
-    Förskjutningen är monoton i linjens läge, så grannlinjer korsas eller trycks aldrig ihop.
-    knots = (x, y, öppningens halva bredd, halva höjd).
+
+def wood(width=1600, height=900, spacing=30, stroke=BLUE, sw=1.2, knots=WOOD_KNOTS, step=5):
+    """Träådring ritad som höjdkurvor i ett fält: f(x, y) = x + kvistar + svaj.
+
+    Höjdkurvor kan aldrig korsa varandra, och runt varje kvist bildas slutna ringar
+    av sig själva, som i riktigt trä.
     """
-    def warp(b, y):
-        x = b
-        for kx, ky, r, ry in knots:
-            dx = b - kx
-            t = (y - ky) / (ry * 1.6)
-            x += (1 if dx >= 0 else -1) * r * math.exp(-t * t) * math.exp(-(dx / (2 * r)) ** 2)
-        return x + 8 * math.sin(y / 170 + b / 260) + 3 * math.sin(y / 63 + b / 90)
+    def f(x, y):
+        v = x + 10 * math.sin(y / 150 + x / 420) + 4 * math.sin(y / 55 + x / 130)
+        for kx, ky, sx, sy, a in knots:
+            dx, dy = (x - kx) / sx, (y - ky) / sy
+            v += a * sx * math.exp(-dx * dx - dy * dy)
+        return v
 
+    pad = 40
+    xs = list(range(-pad, width + pad + 1, step))
+    ys = list(range(-pad, height + pad + 1, step))
+    grid = [[f(x, y) for x in xs] for y in ys]
+    lo = min(min(r) for r in grid); hi = max(max(r) for r in grid)
     paths = []
-    for b0 in range(-72, width + 80, spacing):
-        b = b0 + spacing / 2
-        d = 'M' + ' L'.join(f'{warp(b, y):.1f} {y}' for y in range(-20, height + 21, 10))
-        paths.append(f'<path d="{d}"/>')
-    for kx, ky, r, ry in knots:
-        for f in ((.82, .58, .36, .15) if r > 40 else (.8, .5, .22)):
-            paths.append(f'<ellipse cx="{kx}" cy="{ky}" rx="{r * f:.1f}" ry="{ry * f * .9:.1f}"/>')
+    level = math.floor(lo / spacing) * spacing + spacing / 2
+    while level < hi:
+        # marching squares: segment i varje ruta där kurvan passerar
+        segs = []
+        for j in range(len(ys) - 1):
+            for i in range(len(xs) - 1):
+                c = (grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])
+                pts = []
+                corners = ((xs[i], ys[j]), (xs[i + 1], ys[j]), (xs[i + 1], ys[j + 1]), (xs[i], ys[j + 1]))
+                for e in range(4):
+                    v0, v1 = c[e], c[(e + 1) % 4]
+                    if (v0 < level) != (v1 < level):
+                        t = (level - v0) / (v1 - v0)
+                        (x0, y0), (x1, y1) = corners[e], corners[(e + 1) % 4]
+                        pts.append((round(x0 + t * (x1 - x0), 1), round(y0 + t * (y1 - y0), 1)))
+                if len(pts) == 2:
+                    segs.append((pts[0], pts[1]))
+                elif len(pts) == 4:
+                    segs.append((pts[0], pts[1])); segs.append((pts[2], pts[3]))
+        # foga ihop segmenten till sammanhängande linjer
+        nb = {}
+        for a_, b_ in segs:
+            nb.setdefault(a_, []).append(b_); nb.setdefault(b_, []).append(a_)
+        seen = set()
+        def walk(start):
+            line = [start]; prev = None; cur = start
+            while True:
+                nxt = [n for n in nb[cur] if n != prev and (min(cur, n), max(cur, n)) not in seen]
+                if not nxt:
+                    return line
+                n = nxt[0]; seen.add((min(cur, n), max(cur, n))); prev, cur = cur, n; line.append(cur)
+                if cur == start:
+                    return line
+        ends = [p_ for p_, l in nb.items() if len(l) == 1]
+        for st in ends + list(nb):
+            if any((min(st, n), max(st, n)) not in seen for n in nb[st]):
+                line = walk(st)
+                if len(line) > 3:
+                    line = line[::2] + ([line[-1]] if len(line) % 2 == 0 else [])
+                    paths.append('<path d="M' + ' L'.join(f'{x:g} {y:g}' for x, y in line) + '"/>')
+        level += spacing
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" preserveAspectRatio="xMidYMid slice">'
-            f'<g fill="none" stroke="{stroke}" stroke-width="{sw}" vector-effect="non-scaling-stroke">' + ''.join(paths) + '</g></svg>')
+            f'<g fill="none" stroke="{stroke}" stroke-width="{sw}" stroke-linejoin="round" vector-effect="non-scaling-stroke">'
+            + ''.join(paths) + '</g></svg>')
 
 
 def tile(w, h, body, stroke, sw=1):
