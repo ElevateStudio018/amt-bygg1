@@ -5,79 +5,34 @@ Kör: python3 src/patterns.py  -> assets/patterns/*.svg + assets/css/patterns.cs
 import math, random, base64, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-NAVY, BLUE, GOLD = '#122a6e', '#0a9cf0', '#d9a21b'
+NAVY, BLUE, GOLD = '#1b2b55', '#149eda', '#e8bd5a'
 
 
-WOOD_KNOTS = (
-    # x, y, halva bredden, halva höjden, styrka (negativ = kvisten vänder åt andra hållet)
-    (1240, 300, 80, 200, 4.4), (330, 520, 72, 190, -4.2), (820, 330, 46, 130, 3.4),
-    (1520, 640, 56, 160, -3.6), (90, 300, 44, 130, 3.2), (640, 640, 40, 110, -3.0),
-)
-
-
-def wood(width=1600, height=900, spacing=30, stroke=BLUE, sw=1.2, knots=WOOD_KNOTS, step=5):
-    """Träådring ritad som höjdkurvor i ett fält: f(x, y) = x + kvistar + svaj.
-
-    Höjdkurvor kan aldrig korsa varandra, och runt varje kvist bildas slutna ringar
-    av sig själva, som i riktigt trä.
-    """
-    def f(x, y):
-        v = x + 10 * math.sin(y / 150 + x / 420) + 4 * math.sin(y / 55 + x / 130)
-        for kx, ky, sx, sy, a in knots:
-            dx, dy = (x - kx) / sx, (y - ky) / sy
-            v += a * sx * math.exp(-dx * dx - dy * dy)
-        return v
-
-    pad = 40
-    xs = list(range(-pad, width + pad + 1, step))
-    ys = list(range(-pad, height + pad + 1, step))
-    grid = [[f(x, y) for x in xs] for y in ys]
-    lo = min(min(r) for r in grid); hi = max(max(r) for r in grid)
+def wood(width=1200, height=1600, spacing=16, seed=7, stroke=BLUE, sw=1.1):
+    """Träådring: vertikala linjer som viker undan för kvistar, som i AMT:s eget mönster."""
+    rnd = random.Random(seed)
+    knots = [(rnd.uniform(.1, .9) * width, rnd.uniform(.08, .92) * height, rnd.uniform(28, 70)) for _ in range(7)]
     paths = []
-    level = math.floor(lo / spacing) * spacing + spacing / 2
-    while level < hi:
-        # marching squares: segment i varje ruta där kurvan passerar
-        segs = []
-        for j in range(len(ys) - 1):
-            for i in range(len(xs) - 1):
-                c = (grid[j][i], grid[j][i + 1], grid[j + 1][i + 1], grid[j + 1][i])
-                pts = []
-                corners = ((xs[i], ys[j]), (xs[i + 1], ys[j]), (xs[i + 1], ys[j + 1]), (xs[i], ys[j + 1]))
-                for e in range(4):
-                    v0, v1 = c[e], c[(e + 1) % 4]
-                    if (v0 < level) != (v1 < level):
-                        t = (level - v0) / (v1 - v0)
-                        (x0, y0), (x1, y1) = corners[e], corners[(e + 1) % 4]
-                        pts.append((round(x0 + t * (x1 - x0), 1), round(y0 + t * (y1 - y0), 1)))
-                if len(pts) == 2:
-                    segs.append((pts[0], pts[1]))
-                elif len(pts) == 4:
-                    segs.append((pts[0], pts[1])); segs.append((pts[2], pts[3]))
-        # foga ihop segmenten till sammanhängande linjer
-        nb = {}
-        for a_, b_ in segs:
-            nb.setdefault(a_, []).append(b_); nb.setdefault(b_, []).append(a_)
-        seen = set()
-        def walk(start):
-            line = [start]; prev = None; cur = start
-            while True:
-                nxt = [n for n in nb[cur] if n != prev and (min(cur, n), max(cur, n)) not in seen]
-                if not nxt:
-                    return line
-                n = nxt[0]; seen.add((min(cur, n), max(cur, n))); prev, cur = cur, n; line.append(cur)
-                if cur == start:
-                    return line
-        ends = [p_ for p_, l in nb.items() if len(l) == 1]
-        for st in ends + list(nb):
-            if any((min(st, n), max(st, n)) not in seen for n in nb[st]):
-                line = walk(st)
-                if len(line) > 3:
-                    line = line[::2] + ([line[-1]] if len(line) % 2 == 0 else [])
-                    paths.append('<path d="M' + ' L'.join(f'{x:g} {y:g}' for x, y in line) + '"/>')
-        level += spacing
+    n = int(width / spacing) + 6
+    for i in range(-3, n):
+        x0 = i * spacing
+        ph = rnd.uniform(0, 6.28)
+        pts = []
+        for y in range(-20, height + 21, 12):
+            x = x0 + 9 * math.sin(y / 260 + ph * .2) + 4 * math.sin(y / 90 + i * .35)
+            for kx, ky, r in knots:
+                dx, dy = x - kx, (y - ky) * .38
+                d2 = dx * dx + dy * dy
+                x += 1.9 * r * r * dx / (d2 + r * r * .35)
+            pts.append((x, y))
+        d = 'M' + ' L'.join(f'{x:.0f} {y}' for x, y in pts)
+        paths.append(f'<path d="{d}"/>')
+    for kx, ky, r in knots:
+        for k in range(1, 5):
+            rx, ry = r * .18 * k, r * .62 * k
+            paths.append(f'<ellipse cx="{kx:.1f}" cy="{ky:.1f}" rx="{rx:.1f}" ry="{ry:.1f}"/>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" preserveAspectRatio="xMidYMid slice">'
-            f'<g fill="none" stroke="{stroke}" stroke-width="{sw}" stroke-linejoin="round" vector-effect="non-scaling-stroke">'
-            + ''.join(paths) + '</g></svg>')
+            f'<g fill="none" stroke="{stroke}" stroke-width="{sw}" vector-effect="non-scaling-stroke">' + ''.join(paths) + '</g></svg>')
 
 
 def tile(w, h, body, stroke, sw=1):
@@ -139,8 +94,8 @@ def main():
     pdir = os.path.join(ROOT, 'assets', 'patterns')
     os.makedirs(pdir, exist_ok=True)
     open(os.path.join(pdir, 'wood-blue.svg'), 'w').write(wood())
-    open(os.path.join(pdir, 'wood-navy.svg'), 'w').write(wood(stroke=NAVY))
-    open(os.path.join(pdir, 'wood-gold.svg'), 'w').write(wood(stroke=GOLD))
+    open(os.path.join(pdir, 'wood-navy.svg'), 'w').write(wood(stroke=NAVY, seed=11))
+    open(os.path.join(pdir, 'wood-gold.svg'), 'w').write(wood(stroke=GOLD, seed=3))
     tones = {'blue': BLUE, 'navy': NAVY, 'gold': GOLD, 'white': '#ffffff'}
     gens = {'parquet': herringbone, 'studs': studs, 'brick': brick, 'hatch': hatch, 'grid': grid}
     css = ['/* Genererad av src/patterns.py – redigera inte för hand */']

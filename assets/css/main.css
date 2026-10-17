@@ -549,7 +549,7 @@ a.cell:hover .cell__img img { transform: scale(1.04); }
 
 /* ---------- CTA-band ---------- */
 .cta-band { position: relative; overflow: hidden; background: linear-gradient(110deg, var(--navy-900) 0%, var(--navy) 45%, #0f5f93 100%); color: var(--white); isolation: isolate; }
-.cta-band .pattern { z-index: -1; --pat-o: .6; }
+.cta-band .pattern { z-index: -1; --pat-o: .5; }
 .cta-band .wrap { padding-block: clamp(80px, 9vw, 140px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2.2vw, 32px); align-items: end; row-gap: 40px; }
 .cta-band__text { grid-column: 1 / span 7; }
 .cta-band h2 { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.6rem); letter-spacing: -.01em; margin-top: 28px; }
