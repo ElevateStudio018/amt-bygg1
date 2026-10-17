@@ -317,7 +317,7 @@ strong { font-weight: 650; }
   background: linear-gradient(90deg, rgba(19, 31, 64, .55) 0%, rgba(19, 31, 64, .35) 35%, rgba(19, 31, 64, 0) 60%),
               linear-gradient(0deg, rgba(19, 31, 64, .55) 0%, rgba(19, 31, 64, 0) 35%); }
 .hero__body { padding-block: clamp(64px, 8vw, 120px) clamp(56px, 7vw, 104px); }
-.hero h1::before, .page-hero h1::before { content: ""; display: block; width: 72px; height: 4px; border-radius: 2px; margin-bottom: 28px; background: var(--brand-bar); }
+.page-hero h1::before { content: ""; display: block; width: 72px; height: 4px; border-radius: 2px; margin-bottom: 28px; background: var(--brand-bar); }
 .hero h1 { font-size: clamp(2.4rem, 1.2rem + 3.8vw, 5rem); font-weight: 700; line-height: 1.04; letter-spacing: -.028em; max-width: 13ch; }
 .hero__lead { margin-top: 24px; max-width: 40ch; font-size: clamp(1.05rem, 1rem + .35vw, 1.28rem); line-height: 1.55; color: rgba(255, 255, 255, .88); }
 .hero .btn-row { margin-top: 36px; }
