@@ -8,8 +8,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NAVY, BLUE, GOLD = '#122a6e', '#0a9cf0', '#d9a21b'
 
 
-def wood(width=1600, height=900, spacing=24, stroke=BLUE, sw=1,
-         knots=((1085, 300, 62, 120), (420, 700, 44, 86))):
+def wood(width=1600, height=900, spacing=34, stroke=BLUE, sw=1,
+         knots=((1120, 250, 62, 118), (420, 690, 50, 92), (760, 120, 36, 70),
+                (1430, 700, 44, 84), (180, 230, 34, 66), (900, 600, 30, 58), (640, 820, 24, 46))):
     """Träådring: jämnt fördelade vertikala linjer som glider isär runt kvistar.
 
     Förskjutningen är monoton i linjens läge, så grannlinjer korsas eller trycks aldrig ihop.
@@ -29,7 +30,7 @@ def wood(width=1600, height=900, spacing=24, stroke=BLUE, sw=1,
         d = 'M' + ' L'.join(f'{warp(b, y):.1f} {y}' for y in range(-20, height + 21, 10))
         paths.append(f'<path d="{d}"/>')
     for kx, ky, r, ry in knots:
-        for f in (.82, .58, .36, .15):
+        for f in ((.82, .58, .36, .15) if r > 40 else (.8, .5, .22)):
             paths.append(f'<ellipse cx="{kx}" cy="{ky}" rx="{r * f:.1f}" ry="{ry * f * .9:.1f}"/>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" preserveAspectRatio="xMidYMid slice">'
             f'<g fill="none" stroke="{stroke}" stroke-width="{sw}" vector-effect="non-scaling-stroke">' + ''.join(paths) + '</g></svg>')
